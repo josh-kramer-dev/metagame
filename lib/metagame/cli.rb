@@ -1,4 +1,5 @@
 class Metagame::CLI
+attr_accessor :name, :price, :meta_percent, :url
 
   def call
     list_format_meta
@@ -8,9 +9,10 @@ class Metagame::CLI
 
   def list_format_meta
     puts "Standard Metagame:"
-    @decks = Metagame::Deck.today
+    @decks = Metagame::Deck.scrape_standard
+    binding.pry
     @decks.each.with_index(1) do |deck, i|
-      puts "#{i}. #{deck.name} - #{deck.price} - #{deck.meta_percent}% of Meta - #{deck.url}"
+      puts "#{i}. #{deck.name} - #{deck.price} - #{deck.meta_percent} of Meta - https://www.mtggoldfish.com#{deck.url}"
     end
   end
 
