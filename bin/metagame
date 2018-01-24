@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
-require './lib/metagame'
+
+require "bundler/setup"
+require "metagame"
+
 
 Metagame::CLI.new.call

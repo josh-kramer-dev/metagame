@@ -8,42 +8,25 @@ class Metagame::CLI
 
   def list_format_meta
     puts "Standard Metagame:"
-    puts <<-DOC
-      1. Grixis Energy - $301 - 14.40% of Meta
-      2. Mardu Vehicles - $233 - 8.80% of Meta
-      DOC
-    # puts "Modern Metagame:"
-    # puts <<-DOC
-    #   1.  Affinity - $726 - 7.57% of Meta
-    #   2.  Jeskai Control - $1,162 - 7.35% of Meta
-    #   DOC
     @decks = Metagame::Deck.today
+    @decks.each.with_index(1) do |deck, i|
+      puts "#{i}. #{deck.name} - #{deck.price} - #{deck.meta_percent}% of Meta - #{deck.url}"
+    end
   end
 
   def menu
-    # puts "Which format would you like to view metagame info for?"
-    # input = gets.strip.downcase
-    # if input = "standard"
-    #   do this for the standard object
-    # elsif input = "modern"
-    #   do this for the modern object
-    #   else
-    #     puts "Please try again"
-    #     list_format_meta
     input = nil
     while input != "exit"
-      puts "Enter the number for the deck you would like to view, list to see the decks again, or type exit."
-
+      puts "Enter the number for the deck you would like to view, type list to see the decks again, or type exit."
       input = gets.strip.downcase
-      if input == "1"
-        puts "More info on Deck 1..."
-      elsif input == "2"
-        puts "More info on Deck 2"
+
+      if input.to_i > 0 && input.to_i <= @decks.length
+        the_deck = @decks[input.to_i-1]
+        puts "#{the_deck.name} - #{the_deck.price} - #{the_deck.meta_percent}% of Meta - #{the_deck.url}"
       elsif input == "list"
         list_format_meta
       else
         puts "Please try again by typing list or exit."
-        list_format_meta
       end
     end
   end
