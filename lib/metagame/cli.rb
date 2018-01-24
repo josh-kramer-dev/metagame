@@ -22,7 +22,7 @@ class Metagame::CLI
 
       if input.to_i > 0 && input.to_i <= @decks.length
         the_deck = @decks[input.to_i-1]
-        puts "#{the_deck.name} - #{the_deck.price} - #{the_deck.meta_percent}% of Meta - #{the_deck.url}"
+        puts "#{the_deck.name} - #{the_deck.price} - #{the_deck.meta_percent} of Meta - #{the_deck.url}"
       elsif input == "list"
         list_format_meta
       else
