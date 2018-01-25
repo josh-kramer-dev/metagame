@@ -36,6 +36,11 @@ attr_reader :name, :price, :meta_percent, :url, :format
   end
 
   def list_modern_meta
+    puts "\nModern Metagame:\n------------------\n"
+    @decks = Metagame::Deck.scrape_modern
+    @decks.each.with_index(1) do |deck, i|
+      puts "\n#{i}. #{deck[:name]} - #{deck[:price]} - #{deck[:meta_percent]} of Meta - https://www.mtggoldfish.com#{deck[:url]}"
+    end
   end
 
   def menu
