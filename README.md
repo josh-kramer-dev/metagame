@@ -1,8 +1,6 @@
 # Metagame
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/metagame`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Welcome to the Magic the Gathering(MtG) Metagame Gem. This gem is designed to scrape data from a leading website for MtG metagame information, and allow the user to interact with that information. They will be able to see prices, popularity, and get a link to the most popular decks of the day for both the Standard and Modern format.
 
 ## Installation
 
@@ -22,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use this gem, you will need to run the executable file, located in ./bin/metagame.
+
+You will then be prompted to pick a format of MtG. Once you have picked the format, a list of the popular decks of the day within that format will be displayed. You will then have the option to pick one of those decks to get a closer look, display the entire list again, choose a format again, or exit the application.
 
 ## Development
 
