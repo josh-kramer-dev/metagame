@@ -59,7 +59,7 @@ attr_reader :name, :price, :meta_percent, :url, :format
       elsif input == "exit"
         nil
       else
-        puts "Please try again by typing list, format, or exit."
+        puts "Please try again by picking a deck, or by typing list, format, or exit."
       end
     end
   end
