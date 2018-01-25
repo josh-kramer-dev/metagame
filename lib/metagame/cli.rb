@@ -17,15 +17,24 @@ class Metagame::CLI
     input = gets.strip.downcase
     if input == "standard"
       @format = "standard"
-      list_standard_meta
-    elsif input == "modern"
-      @format = "modern"
-      list_modern_meta
+      # list_standard_meta
+      list_format
+    # elsif input == "modern"
+    #   @format = "modern"
+    #   list_modern_meta
     else
       puts "Gotta pick one or the other... You can do it!"
       pick_format
     end
   end
+
+  def list_format
+    puts "/n #{@format} Metagame:\n-------------------\n"
+    @decks = Metagame::Deck.scrape_format(@format)
+    @decks.each.with_index(1) do |deck, i|
+       puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
+     end
+   end
 
   # def list_standard_meta
   #   puts "\nStandard Metagame:\n------------------\n"
@@ -34,14 +43,14 @@ class Metagame::CLI
   #     puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
   #   end
   # end
-
-  def list_modern_meta
-    puts "\nModern Metagame:\n------------------\n"
-    @decks = Metagame::Deck.scrape_modern
-    @decks.each.with_index(1) do |deck, i|
-      puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
-    end
-  end
+  #
+  # def list_modern_meta
+  #   puts "\nModern Metagame:\n------------------\n"
+  #   @decks = Metagame::Deck.scrape_modern
+  #   @decks.each.with_index(1) do |deck, i|
+  #     puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
+  #   end
+  # end
 
   def menu
     input = nil
