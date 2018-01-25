@@ -1,5 +1,5 @@
 class Metagame::CLI
-attr_accessor :name, :price, :meta_percent, :url
+attr_reader :name, :price, :meta_percent, :url
 
   def call
     list_format_meta
@@ -10,9 +10,8 @@ attr_accessor :name, :price, :meta_percent, :url
   def list_format_meta
     puts "Standard Metagame:"
     @decks = Metagame::Deck.scrape_standard
-    binding.pry
     @decks.each.with_index(1) do |deck, i|
-      puts "#{i}. #{deck.name} - #{deck.price} - #{deck.meta_percent} of Meta - https://www.mtggoldfish.com#{deck.url}"
+      puts "#{i}. #{deck[:name]} - #{deck[:price]} - #{deck[:meta_percent]} of Meta - https://www.mtggoldfish.com#{deck[:url]}"
     end
   end
 
@@ -24,7 +23,7 @@ attr_accessor :name, :price, :meta_percent, :url
 
       if input.to_i > 0 && input.to_i <= @decks.length
         the_deck = @decks[input.to_i-1]
-        puts "#{the_deck.name} - #{the_deck.price} - #{the_deck.meta_percent} of Meta - #{the_deck.url}"
+        puts "#{the_deck[:name]} - #{the_deck[:price]} - #{the_deck[:meta_percent]} of Meta - https://www.mtggoldfish.com#{the_deck[:url]}"
       elsif input == "list"
         list_format_meta
       else
