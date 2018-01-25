@@ -12,36 +12,42 @@ class Metagame::CLI
   end
 
   def pick_format
-    puts "Which format would you like to view? Standard or Modern?"
+    puts "Which format would you like to view?\n1. Standard \n2. Modern \n3. Pauper \n4. Legacy \n5. Vintage \n6. Frontier \n7. Commander 1v1 \n8. Commander \n9. Tiny Leaders"
     input = nil
-    input = gets.strip.downcase
-    if input == "standard"
-      @format = "standard"
-      list_standard_meta
-    elsif input == "modern"
-      @format = "modern"
-      list_modern_meta
-    else
-      puts "Gotta pick one or the other... You can do it!"
-      pick_format
-    end
+    input = gets.strip.to_i
+      case input
+      when 1
+        @format = "Standard"
+      when 2
+        @format = "Modern"
+      when 3
+        @format = "Pauper"
+      when 4
+        @format = "Legacy"
+      when 5
+        @format = "Vintage"
+      when 6
+        @format = "Frontier"
+      when 7
+        @format = "Commander_1v1"
+      when 8
+        @format = "Commander"
+      when 9
+        @format = "Tiny_leaders"
+      else
+        puts "Please try again"
+        pick_format
+      end
+    list_format
   end
 
-  def list_standard_meta
-    puts "\nStandard Metagame:\n------------------\n"
-    @decks = Metagame::Deck.scrape_standard
+  def list_format
+    puts "/n #{@format} metagame:\n-------------------\n"
+    @decks = Metagame::Deck.scrape_format(@format.downcase)
     @decks.each.with_index(1) do |deck, i|
-      puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
-    end
-  end
-
-  def list_modern_meta
-    puts "\nModern Metagame:\n------------------\n"
-    @decks = Metagame::Deck.scrape_modern
-    @decks.each.with_index(1) do |deck, i|
-      puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
-    end
-  end
+       puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
+     end
+   end
 
   def menu
     input = nil
@@ -53,13 +59,14 @@ class Metagame::CLI
           the_deck = @decks[input.to_i-1]
           puts "\n#{the_deck[:name]} - #{the_deck[:price]} - #{the_deck[:meta_percent]} of Meta - https://www.mtggoldfish.com#{the_deck[:url]}"
         elsif input == "list"
-          @format == "standard" ? list_standard_meta : list_modern_meta
+          list_format
+          # @format == "standard" ? list_standard_meta : list_modern_meta
         elsif input == "format"
           pick_format
         elsif input == "exit"
           nil
         else
-          puts "Please try again by picking a deck, or by typing list, format, or exit."
+          puts "Please pick a deck, or type list, format, or exit."
         end
     end
   end
