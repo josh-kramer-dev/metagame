@@ -56,6 +56,8 @@ attr_reader :name, :price, :meta_percent, :url, :format
         @format == "standard" ? list_standard_meta : list_modern_meta
       elsif input == "format"
         pick_format
+      elsif input == "exit"
+        nil
       else
         puts "Please try again by typing list, format, or exit."
       end
