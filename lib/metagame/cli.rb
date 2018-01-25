@@ -27,13 +27,13 @@ class Metagame::CLI
     end
   end
 
-  def list_standard_meta
-    puts "\nStandard Metagame:\n------------------\n"
-    @decks = Metagame::Deck.scrape_standard
-    @decks.each.with_index(1) do |deck, i|
-      puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
-    end
-  end
+  # def list_standard_meta
+  #   puts "\nStandard Metagame:\n------------------\n"
+  #   @decks = Metagame::Deck.scrape_standard
+  #   @decks.each.with_index(1) do |deck, i|
+  #     puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
+  #   end
+  # end
 
   def list_modern_meta
     puts "\nModern Metagame:\n------------------\n"
