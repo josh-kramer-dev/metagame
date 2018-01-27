@@ -2,7 +2,7 @@ class Metagame::Deck
   attr_accessor :name, :price, :meta_percent, :url
 
   def self.scrape_for_list_of_formats
-    ["Standard", "Modern", "Pauper", "Commander", "Commander_1v1", "Legacy"]
+    ["Standard", "Modern", "Pauper", "Commander", "Commander_1v1", "Legacy", "Vintage", "Frontier", "Tiny_Leaders"]
   end
 
   def self.scrape_format(format)
