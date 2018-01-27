@@ -1,6 +1,10 @@
 class Metagame::Deck
   attr_accessor :name, :price, :meta_percent, :url
 
+  def self.scrape_for_list_of_formats
+    ["Standard", "Modern", "Pauper", "Commander", "Commander_1v1", "Legacy"]
+  end
+
   def self.scrape_format(format)
     doc = Nokogiri::HTML(open("https://www.mtggoldfish.com/metagame/#{format}#paper"))
     decks = []
@@ -14,5 +18,4 @@ class Metagame::Deck
       }
     end
   end
-
 end
