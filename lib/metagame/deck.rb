@@ -1,9 +1,21 @@
 class Metagame::Deck
   attr_accessor :name, :price, :meta_percent, :url
 
+  def self.scrape_for_list_of_formats
+    doc = Nokogiri::HTML(open("https://www.mtggoldfish.com/metagame/standard#paper"))
+
+    formats ||= doc.search("div.subNav-menu-desktop a")
+    list_of_formats = []
+    formats.each do |name|
+      # if !list_of_formats.include?(name)
+      list_of_formats << name.text
+      end
+    end
+    list_of_formats
+  end
+
   def self.scrape_format(format)
     doc = Nokogiri::HTML(open("https://www.mtggoldfish.com/metagame/#{format}#paper"))
-    decks = []
     deck_list ||= doc.search("div.archetype-tile")
     deck_list.collect do |deck|
       hash = {
@@ -14,5 +26,4 @@ class Metagame::Deck
       }
     end
   end
-
 end

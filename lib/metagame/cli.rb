@@ -6,43 +6,42 @@ class Metagame::CLI
   end
 
   def call
-    pick_format
+    get_format_from_user
     menu
     goodbye
   end
 
-  def pick_format
-    puts "Which format would you like to view?\n1. Standard \n2. Modern \n3. Pauper \n4. Legacy \n5. Vintage \n6. Frontier \n7. Commander 1v1 \n8. Commander \n9. Tiny Leaders"
-    input = nil
-    input = gets.strip.to_i
-      case input
-      when 1
-        @format = "Standard"
-      when 2
-        @format = "Modern"
-      when 3
-        @format = "Pauper"
-      when 4
-        @format = "Legacy"
-      when 5
-        @format = "Vintage"
-      when 6
-        @format = "Frontier"
-      when 7
-        @format = "Commander_1v1"
-      when 8
-        @format = "Commander"
-      when 9
-        @format = "Tiny_leaders"
-      else
-        puts "Please try again"
-        pick_format
-      end
-    list_format
+  def get_format_from_user
+  	get_format_list
+    list_formats_to_user
+    set_format_to_user_input
+    list_decks
   end
 
-  def list_format
-    puts "/n #{@format} metagame:\n-------------------\n"
+  def get_format_list
+    @format_list = Metagame::Deck.scrape_for_list_of_formats
+  end
+
+  def list_formats_to_user
+    puts "\nWhich format would you like more info on?"
+  	@format_list.uniq.each.with_index(1) do |name, i|
+  	   puts "#{i}. #{name}"
+  	end
+  end
+
+  def set_format_to_user_input
+  	input = gets.strip.to_i-1
+  	@format = @format_list[input]
+    if @format == "Tiny Leaders"
+      @format = "Tiny_Leaders"
+    elsif @format == "Commander 1v1"
+      @format = "Commander_1v1"
+    end
+    @format
+  end
+
+  def list_decks
+    puts "\n#{@format} metagame:\n-------------------\n"
     @decks = Metagame::Deck.scrape_format(@format.downcase)
     @decks.each.with_index(1) do |deck, i|
        puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
@@ -52,17 +51,16 @@ class Metagame::CLI
   def menu
     input = nil
     while input != "exit"
-      puts "\nOPTIONS\n--------\nEnter the number for the deck you would like to view\nType list to see the decks again\nType format to pick your format\nType exit."
+      puts "\nOPTIONS\n--------\nEnter the number for the deck you would like to view\nType list to see the decks again\nType format to pick your format\nType exit.\n"
       input = gets.strip.downcase
-
-        if input.to_i > 0 && input.to_i <= @decks.length
+      if input.to_i > 0 && input.to_i <= @decks.length
           the_deck = @decks[input.to_i-1]
-          puts "\n#{the_deck[:name]} - #{the_deck[:price]} - #{the_deck[:meta_percent]} of Meta - https://www.mtggoldfish.com#{the_deck[:url]}"
+          puts "\n#{the_deck[:name]}\n#{the_deck[:price]}\n#{the_deck[:meta_percent]} of Meta\nhttps://www.mtggoldfish.com#{the_deck[:url]}"
         elsif input == "list"
-          list_format
+          list_decks
           # @format == "standard" ? list_standard_meta : list_modern_meta
         elsif input == "format"
-          pick_format
+          reload_format
         elsif input == "exit"
           nil
         else
@@ -71,8 +69,13 @@ class Metagame::CLI
     end
   end
 
+  def reload_format
+   list_formats_to_user
+   set_format_to_user_input
+   list_decks
+  end
+
   def goodbye
     puts "See you tomorrow!"
   end
-
 end
