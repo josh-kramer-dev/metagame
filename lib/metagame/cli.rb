@@ -12,10 +12,10 @@ class Metagame::CLI
   end
 
   def get_format_from_user
-  	 get_format_list
-    	list_formats_to_user
-    	set_format_to_user_input
-      list_decks
+  	get_format_list
+    list_formats_to_user
+    set_format_to_user_input
+    list_decks
   end
 
   def get_format_list
@@ -23,7 +23,7 @@ class Metagame::CLI
   end
 
   def list_formats_to_user
-    puts "Which format would you like more info on?"
+    puts "\nWhich format would you like more info on?"
   	@format_list.each.with_index(1) do |name, i|
   	   puts "#{i}. #{name}"
   	end
@@ -42,14 +42,20 @@ class Metagame::CLI
      end
    end
 
+  def reload_format
+   list_formats_to_user
+   set_format_to_user_input
+   list_decks
+  end
+
   def menu
     input = nil
     while input != "exit"
-      puts "\nOPTIONS\n--------\nEnter the number for the deck you would like to view\nType list to see the decks again\nType format to pick your format\nType exit."
+      puts "\nOPTIONS\n--------\nEnter the number for the deck you would like to view\nType list to see the decks again\nType format to pick your format\nType exit.\n"
       input = gets.strip.downcase
       if input.to_i > 0 && input.to_i <= @decks.length
           the_deck = @decks[input.to_i-1]
-          puts "\n#{the_deck[:name]} - #{the_deck[:price]} - #{the_deck[:meta_percent]} of Meta - https://www.mtggoldfish.com#{the_deck[:url]}"
+          puts "\n#{the_deck[:name]}\n#{the_deck[:price]}\n#{the_deck[:meta_percent]} of Meta\nhttps://www.mtggoldfish.com#{the_deck[:url]}"
         elsif input == "list"
           list_decks
           # @format == "standard" ? list_standard_meta : list_modern_meta
@@ -62,12 +68,6 @@ class Metagame::CLI
         end
     end
   end
-
-  def reload_format
-    list_formats_to_user
-    pick_format
-  end
-
 
   def goodbye
     puts "See you tomorrow!"
