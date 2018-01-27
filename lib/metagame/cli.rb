@@ -1,9 +1,5 @@
 class Metagame::CLI
-  attr_reader :name, :price, :meta_percent, :url, :format
-
-  def initialize
-    @format = nil
-  end
+  attr_reader :name, :format
 
   def call
     get_format_from_user
@@ -24,7 +20,7 @@ class Metagame::CLI
 
   def list_formats_to_user
     puts "\nWhich format would you like more info on?"
-  	@format_list.uniq.each.with_index(1) do |name, i|
+  	@format_list.  each.with_index(1) do |name, i|
   	   puts "#{i}. #{name}"
   	end
   end
@@ -41,7 +37,7 @@ class Metagame::CLI
   end
 
   def list_decks
-    puts "\n#{@format} metagame:\n-------------------\n"
+    puts "\n#{@format} Metagame:\n-------------------\n"
     @decks = Metagame::Deck.scrape_format(@format.downcase)
     @decks.each.with_index(1) do |deck, i|
        puts "\n#{i}. #{deck[:name]} - #{deck[:meta_percent]} of Meta"
@@ -55,10 +51,15 @@ class Metagame::CLI
       input = gets.strip.downcase
       if input.to_i > 0 && input.to_i <= @decks.length
           the_deck = @decks[input.to_i-1]
-          puts "\n#{the_deck[:name]}\n#{the_deck[:price]}\n#{the_deck[:meta_percent]} of Meta\nhttps://www.mtggoldfish.com#{the_deck[:url]}"
+          deck_list = Metagame::Deck.scrape_deck_list(the_deck[:url])
+          puts "\n#{the_deck[:name]}\n#{the_deck[:price]}\n#{the_deck[:meta_percent]} of Meta\n \nDECK LIST\n-----------"
+
+          deck_list.each do |quantity, name, price|
+          puts "#{quantity} - #{name} - #{price}"
+          end
+
         elsif input == "list"
           list_decks
-          # @format == "standard" ? list_standard_meta : list_modern_meta
         elsif input == "format"
           reload_format
         elsif input == "exit"

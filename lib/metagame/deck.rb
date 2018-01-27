@@ -7,12 +7,11 @@ class Metagame::Deck
     formats ||= doc.search("div.subNav-menu-desktop a")
     list_of_formats = []
     formats.each do |name|
-      # if !list_of_formats.include?(name)
-      list_of_formats << name.text
+      list_of_formats << name.text.gsub(" ", "_")
       end
-    end
-    list_of_formats
+      list_of_formats.uniq
   end
+
 
   def self.scrape_format(format)
     doc = Nokogiri::HTML(open("https://www.mtggoldfish.com/metagame/#{format}#paper"))
@@ -25,5 +24,21 @@ class Metagame::Deck
         :url => deck.search("h2 span.deck-price-paper a").attribute("href").value,
       }
     end
+  end
+
+  def self.scrape_deck_list(deck_url)
+    doc = Nokogiri::HTML(open("https://www.mtggoldfish.com#{deck_url}"))
+    # return deck_list
+
+    # deck_list.collect do |deck|
+    # cards_in_deck = {
+    #   :quantity => deck.search(""),
+    #   :title => deck.search(""),
+    #   :price => deck.search(""),
+    # }
+
+    cards_in_deck = {:quantity => 4, :title =>"harnessed lightning", :price => "$2.50"}
+
+    cards_in_deck
   end
 end
