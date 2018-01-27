@@ -52,12 +52,12 @@ class Metagame::CLI
       if input.to_i > 0 && input.to_i <= @decks.length
           the_deck = @decks[input.to_i-1]
           deck_list = Metagame::Deck.scrape_deck_list(the_deck[:url])
-          # binding.pry
-          puts "\n#{the_deck[:name]}\n#{the_deck[:price]}\n#{the_deck[:meta_percent]} of Meta\n \nDECK LIST\n----------"
+          # binding.pry`
+          puts "\n#{the_deck[:name]}\n#{the_deck[:price]}\n#{the_deck[:meta_percent]} of Meta\n \nDECK LIST - Coming Soon\n----------"
 
-          deck_list.each do |card|
-            puts "#{card[:quantity]}  #{card[:title]} #{card[:price]}"
-          end
+          # deck_list.each do |card|
+          #   puts "#{card[:quantity]}  #{card[:title]} #{card[:price]}"
+          # end
 
         elsif input == "list"
           list_decks
