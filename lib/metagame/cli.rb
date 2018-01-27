@@ -12,6 +12,16 @@ class Metagame::CLI
   end
 
   def pick_format
+     <<-DOC want to get it so that I can take a "#{@formats}"
+
+     @formats = Metagame::Deck.scrape_format ==> returns format_list from the scraper (which outputs an array of hashes [{:name.text}, {:url.text}])
+
+this will be the code for the scraper to assign to the list that the scraper returns
+     format_list = []
+      @formats.each do |format|
+        format << self
+      end
+    DOC
     puts "Which format would you like to view?\n1. Standard \n2. Modern \n3. Pauper \n4. Legacy \n5. Vintage \n6. Frontier \n7. Commander 1v1 \n8. Commander \n9. Tiny Leaders"
     input = nil
     input = gets.strip.to_i
