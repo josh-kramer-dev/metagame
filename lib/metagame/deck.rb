@@ -28,17 +28,16 @@ class Metagame::Deck
 
   def self.scrape_deck_list(deck_url)
     doc = Nokogiri::HTML(open("https://www.mtggoldfish.com#{deck_url}"))
-    # return deck_list
 
-    # deck_list.collect do |deck|
-    # cards_in_deck = {
-    #   :quantity => deck.search(""),
-    #   :title => deck.search(""),
-    #   :price => deck.search(""),
-    # }
+    deck_list.collect do |deck|
+    cards_in_deck = {
+      :quantity => deck.search(""),
+      :title => deck.search(""),
+      :price => deck.search(""),
+    }
 
-    cards_in_deck = {:quantity => 4, :title =>"harnessed lightning", :price => "$2.50"}
-
-    cards_in_deck
+    # cards_in_deck = [{:quantity => "4", :title =>"harnessed lightning", :price => "$2.50"}, {:quantity => "4", :title => "fatal push", :price => "$10.00"}]
+    #
+    # cards_in_deck
   end
 end
