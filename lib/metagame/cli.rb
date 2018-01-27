@@ -32,6 +32,12 @@ class Metagame::CLI
   def set_format_to_user_input
   	input = gets.strip.to_i-1
   	@format = @format_list[input]
+    if @format == "Tiny Leaders"
+      @format = "Tiny_Leaders"
+    elsif @format == "Commander 1v1"
+      @format = "Commander_1v1"
+    end
+    @format
   end
 
   def list_decks
