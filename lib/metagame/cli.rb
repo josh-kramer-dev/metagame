@@ -24,7 +24,7 @@ class Metagame::CLI
 
   def list_formats_to_user
     puts "\nWhich format would you like more info on?"
-  	@format_list.each.with_index(1) do |name, i|
+  	@format_list.uniq.each.with_index(1) do |name, i|
   	   puts "#{i}. #{name}"
   	end
   end
