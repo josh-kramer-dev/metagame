@@ -5,13 +5,10 @@ class Metagame::Deck
     doc = Nokogiri::HTML(open("https://www.mtggoldfish.com/metagame/standard#paper"))
 
     formats ||= doc.search("div.subNav-menu-desktop a")
-    list_of_formats = []
-    formats.each do |name|
-      if !list_of_formats.include?(name)
-      list_of_formats << name.text
+      formats.collect do |name|
+        name.text.gsub(" ", "_")
       end
-    end
-    list_of_formats
+
   end
 
   def self.scrape_format(format)
@@ -26,5 +23,5 @@ class Metagame::Deck
       }
     end
   end
-  
+
 end
