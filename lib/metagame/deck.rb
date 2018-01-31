@@ -26,4 +26,5 @@ class Metagame::Deck
       }
     end
   end
+  
 end

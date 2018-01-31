@@ -1,10 +1,6 @@
 class Metagame::CLI
   attr_reader :name, :price, :meta_percent, :url, :format
 
-  def initialize
-    @format = nil
-  end
-
   def call
     get_format_from_user
     menu
@@ -64,7 +60,6 @@ class Metagame::CLI
           puts "\n#{the_deck[:name]}\n#{the_deck[:price]}\n#{the_deck[:meta_percent]} of Meta\nhttps://www.mtggoldfish.com#{the_deck[:url]}"
         elsif input == "list"
           list_decks
-          # @format == "standard" ? list_standard_meta : list_modern_meta
         elsif input == "format"
           reload_format
         elsif input == "exit"
@@ -78,4 +73,5 @@ class Metagame::CLI
   def goodbye
     puts "See you tomorrow!"
   end
+  
 end
